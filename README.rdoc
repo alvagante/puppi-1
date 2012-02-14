@@ -1,0 +1,51 @@
+= Puppi on Ruby
+
+This is an experimental version of Puppi made in Ruby
+It's supposed to replace the existing puppi command written in bash.
+
+
+== README (DRIVEN DEVELOPMENT)
+
+        puppi <action> <project_name> [ -options ]
+
+The puppi command has these possibile actions:
+
+* [ puppi init project_name ] : First time initialization of the defined project
+
+* [ puppi deploy project_name ] : Deploys the defined project
+
+* [ puppi rollback project_name ] : Rollback to a previous deploy state 
+
+* [ puppi check ] : Runs project specific and host wide checks 
+
+* [ puppi log ] : Tails system wide or project specific logs 
+
+* [ puppi info topic_name ] : Show system information (for all or only the specified topic)
+
+* [ puppi todo ] : Show things to do (or done) manually on the system
+
+And these options:
+
+* -f - Force puppi commands execution flow also on CRITICAL errors
+
+* -i - Interactively ask confirmation for every step
+
+* -t - Test mode. Just show the commands that should be executed
+
+* -d <yes|full> - Debug mode. Show debug of what is done.
+
+* -r <yes|no|fail> - Enable reporting: yes/no/only on failures. Default depends on action
+
+* -s <yes|no|fail> - Show output: yes/no/only for failures. Default: yes
+
+* -g <pattern> - Grep command output with the selected pattern
+
+* -o "parameter=value parameter2=value2" - Set manual options to override defaults
+
+
+=== Files and directories
+
+* /etc/puppi/data (datadir) contains one yaml file for each Puppet class or defines that uses the puppi::ze define. 
+This yaml contains all the variables provided by the class / define and has this naming layout:
+helper_module.yaml. Where helper is the name of the helper file to use to manage the variables provided in the file and module is the name of the module or class or define that has created the yaml via puppi::ze
+* /etc/puppi/helpers contains the helpers file (created by puppi::helper): a Yaml that describes, for each puppi action, what commands to run and the names of the variables to use (as named in the /etc/puppi/data/helper_module.yaml files) 
