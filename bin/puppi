@@ -1,0 +1,31 @@
+#!/usr/bin/env ruby
+
+require "optparse"
+
+options = Hash.new
+OptionParser.new do |opts|
+  opts.banner = "Usage: " + File.basename($0) + " [options] ..."
+
+  options[:action] = false
+  opts.on( "-a", "--action", "action to perform" ) do |action|
+    options[:action] = action
+  end
+  options[:module] = false
+  opts.on( "-m", "--module", "module name to act on (Optional)" ) do |m|
+    options[:module] = m
+  end
+  opts.on_tail("-h", "--help", "Show this message") do
+    puts opts
+  end
+
+end.parse!
+if options.values.uniq == [false]
+  warn "Use -h, --help for usage."
+  exit 1
+end
+
+require 'puppi'
+
+Puppi::load_data_file('standard_openssh.yaml')
+# Puppi::load_data_file(options[:module])
+

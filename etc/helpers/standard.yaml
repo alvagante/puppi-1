@@ -1,0 +1,13 @@
+--- 
+:info: 
+  -
+    :command: "rpm -qi $package_name"
+    :description: "show package info"
+  -
+    :command: "service $service_name"
+    :description: "show service info"
+:check:
+  -
+    :command: "chk_port $port"
+    :description: "checks port"
+
