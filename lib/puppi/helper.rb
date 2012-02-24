@@ -1,10 +1,9 @@
 module Puppi
   class Helper
-    attr_reader :command, :action, :description
+    attr_reader :command, :description
 
     def initialize args = {}
       @command     = args[:command]
-      @action      = args[:action]
       @description = args[:description]
     end
 

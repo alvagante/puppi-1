@@ -1,31 +1,38 @@
 #!/usr/bin/env ruby
 
 require "optparse"
+require 'puppi'
+Puppi::initial_checks
 
 options = Hash.new
 OptionParser.new do |opts|
   opts.banner = "Usage: " + File.basename($0) + " [options] ..."
 
   options[:action] = false
-  opts.on( "-a", "--action", "action to perform" ) do |action|
+  opts.on( "-a", "--action action", String, "action to perform" ) do |action|
     options[:action] = action
   end
-  options[:module] = false
-  opts.on( "-m", "--module", "module name to act on (Optional)" ) do |m|
-    options[:module] = m
+  options[:puppi_module] = nil
+  opts.on( "-m", "--module module", String, "module name to act on (Optional)" ) do |puppi_module|
+    options[:puppi_module] = puppi_module
   end
   opts.on_tail("-h", "--help", "Show this message") do
     puts opts
   end
-
 end.parse!
+
 if options.values.uniq == [false]
   warn "Use -h, --help for usage."
   exit 1
 end
 
-require 'puppi'
+if options[:action] == false
+  warn "You MUST specify an action"
+  warn "Use -h, --help for usage."
+  exit 1
+end
 
-Puppi::load_data_file('standard_openssh.yaml')
-# Puppi::load_data_file(options[:module])
-
+output = Puppi::Action.new(options[:action], options[:puppi_module]).output
+output.each do |out|
+  puts out unless out.nil?
+end
