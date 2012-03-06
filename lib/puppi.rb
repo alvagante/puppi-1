@@ -1,9 +1,10 @@
 module Puppi
-  require 'puppi/datafile'
-  require 'puppi/helper'
-  require 'puppi/generate_sample_data'
   require 'fileutils'
   require 'puppi/action'
+  require 'puppi/datafile'
+  require 'puppi/generate_sample_data'
+  require 'puppi/helper'
+  require 'puppi/version'
   require 'yaml'
 
   attr_reader :data, :datafiles, :helpers
