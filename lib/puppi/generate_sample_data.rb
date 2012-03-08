@@ -4,8 +4,7 @@ module Puppi
     end
     
     def helpers
-      File.open(Puppi::puppidir+'/helpers/standard.yml', 'w') {|f| f.write(
-'--- 
+      write_file '/helpers/standard.yml', '--- 
 :info: 
   -
     :command: echo "+ %{name} +"
@@ -17,19 +16,19 @@ module Puppi
   -
     :command: echo "| %{version} |"
     :description: "check module version"'
-) }
     end
     
     def datafiles
-      File.open(Puppi::puppidir+'/data/standard_openssh.yml', 'w') {|f| f.write(
-'--- 
+      write_file '/data/standard_openssh.yml', '--- 
 name: openssh
 version: 1.0'
-) }
-      File.open(Puppi::puppidir+'/data/standard_hostname.yml', 'w') {|f| f.write(
-'--- 
+      write_file '/data/standard_hostname.yml', '--- 
 name: hostname'
-) }
+    end
+    
+    private
+    def write_file file, string
+      File.open(Puppi::puppidir+file, 'w') {|f| f.write(string) }
     end
   end
 end
