@@ -26,6 +26,13 @@ version: 1.0'
 name: hostname'
     end
     
+    def notifications
+      write_file '/notifications/mail_user1.yml', '--- 
+mailto: user1@mail.com'
+      write_file '/notifications/mail_user2.yml', '--- 
+mailto: user2@mail.com'
+    end
+    
     private
     def write_file file, string
       File.open(Puppi::puppidir+file, 'w') {|f| f.write(string) }

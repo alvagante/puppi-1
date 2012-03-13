@@ -17,8 +17,10 @@ module Puppi
     def initial_checks
       FileUtils.mkdir_p puppidir+'/data'
       FileUtils.mkdir_p puppidir+'/helpers'
+      FileUtils.mkdir_p puppidir+'/notifications'
       raise "Puppi::NoPuppiDir" unless File.directory?(puppidir+'/data')
       raise "Puppi::NoPuppiDir" unless File.directory?(puppidir+'/helpers')
+      raise "Puppi::NoPuppiDir" unless File.directory?(puppidir+'/notifications')
     end
 
     def all_helpers
