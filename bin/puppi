@@ -41,7 +41,6 @@ if options[:action] == false
   exit 1
 end
 
-puts options.inspect
 output = Puppi::Action.new(options).output
 output.each do |out|
   puts out unless out.nil?
