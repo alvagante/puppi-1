@@ -2,28 +2,29 @@ module Puppi
   class Action
     attr_reader :puppi_module, :output
     
-    def initialize (action, puppi_module)
+    def initialize (options)
+      @loader = Puppi::Loader.new
       @actions = [ 'check', 'log', 'info' ]
-      if puppi_module.nil?
+      if options[:puppi_module].nil?
         @puppi_module = nil
       else
-        @puppi_module = puppi_module.to_s
+        @puppi_module = options[:puppi_module].to_s
       end
-      if @actions.include? action.to_s
-        execute action.to_s
+      if @actions.include? options[:action].to_s
+        execute options[:action].to_s
       else
         raise "No Action Found"
       end
     end
     
     def execute action
-      @datafiles = Puppi::all_datafiles(@puppi_module)
+      @datafiles = @loader.load_all('data', @puppi_module)
       @output = Array.new
       @datafiles.each do |datafile|
-        @loaded_datafile = Puppi::load_datafile(datafile)
+        @loaded_datafile = @loader.load_datafile(datafile)
         datafile_helper = datafile.split("_")[0]
         module_helper = datafile.split("_")[1]
-        @helper_commands = Puppi::load_helperfile datafile_helper, action
+        @helper_commands = @loader.load_helperfile datafile_helper, action
         return nil unless not @helper_commands.nil?
         @helper_commands.each do |command|
           @output << (run_command command, module_helper)

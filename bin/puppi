@@ -4,22 +4,31 @@ require "optparse"
 require 'puppi'
 Puppi::initial_checks
 
-options = Hash.new
-OptionParser.new do |opts|
-  opts.banner = "Usage: " + File.basename($0) + " [options] ..."
+begin
+  options = Hash.new
+  OptionParser.new do |opts|
+    opts.banner = "Usage: " + File.basename($0) + " [options] ..."
 
-  options[:action] = false
-  opts.on( "-a", "--action action", String, "action to perform" ) do |action|
-    options[:action] = action
-  end
-  options[:puppi_module] = nil
-  opts.on( "-m", "--module module", String, "module name to act on (Optional)" ) do |puppi_module|
-    options[:puppi_module] = puppi_module
-  end
-  opts.on_tail("-h", "--help", "Show this message") do
-    puts opts
-  end
-end.parse!
+    options[:action] = false
+    opts.on( "-a", "--action action", String, "action to perform" ) do |action|
+      options[:action] = action
+    end
+    options[:puppi_module] = nil
+    opts.on( "-m", "--module module", String, "module name to act on (Optional)" ) do |puppi_module|
+      options[:puppi_module] = puppi_module
+    end
+    options[:notification] = nil
+    opts.on( "-n", "--notification notification1,notification2", Array, "notification(s) methods (Optional)" ) do |notification|
+      options[:notification] = notification
+    end
+    opts.on_tail("-h", "--help", "Show this message") do
+      puts opts
+    end
+  end.parse!
+rescue OptionParser::MissingArgument => e
+  warn "You can't specify an option without any argumento ("+e.to_s+")"
+  exit 1
+end
 
 if options.values.uniq == [false]
   warn "Use -h, --help for usage."
@@ -32,7 +41,8 @@ if options[:action] == false
   exit 1
 end
 
-output = Puppi::Action.new(options[:action], options[:puppi_module]).output
+puts options.inspect
+output = Puppi::Action.new(options).output
 output.each do |out|
   puts out unless out.nil?
 end
