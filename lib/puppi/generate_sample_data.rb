@@ -28,9 +28,13 @@ name: hostname'
     
     def notifications
       write_file '/notifications/mail_user1.yml', '--- 
-mailto: user1@mail.com'
+from: puppi@puppi.com
+to: user1@mail.com
+subject: \'[puppi] notification\''
       write_file '/notifications/mail_user2.yml', '--- 
-mailto: user2@mail.com'
+from: puppi@puppi.com
+to: user2@mail.com
+subject: \'[puppi] notification\''
     end
     
     private

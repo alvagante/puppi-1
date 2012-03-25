@@ -6,6 +6,8 @@ module Puppi
   require 'puppi/action'
   require 'puppi/generate_sample_data'
   require 'puppi/loader'
+  require 'puppi/notification'
+  require 'puppi/notifications/mail'
   require 'puppi/version'
   require 'yaml'
   

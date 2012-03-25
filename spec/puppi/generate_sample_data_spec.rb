@@ -43,12 +43,16 @@ name: hostname'
   it "should generate the standard notification to user1@mail.com for mail method" do
     standard_helper = File.open(Puppi::puppidir+'/notifications/mail_user1.yml', 'rb') { |file| file.read }
     standard_helper.should eql '--- 
-mailto: user1@mail.com'
+from: puppi@puppi.com
+to: user1@mail.com
+subject: \'[puppi] notification\''
   end
   
   it "should generate the standard notification to user2@mail.com for mail method" do
     standard_helper = File.open(Puppi::puppidir+'/notifications/mail_user2.yml', 'rb') { |file| file.read }
     standard_helper.should eql '--- 
-mailto: user2@mail.com'
+from: puppi@puppi.com
+to: user2@mail.com
+subject: \'[puppi] notification\''
   end
 end

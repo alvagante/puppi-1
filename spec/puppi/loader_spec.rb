@@ -67,11 +67,17 @@ describe "Puppi::Loader" do
       @notifications.should be_a(Array)
       @notifications.should have(2).items
     end
+    
+    it "should load all notification files for mail method" do
+      @notifications = @loader.load_all('notifications', 'mail')
+      @notifications.should be_a(Array)
+      @notifications.should have(2).items
+    end
   
     it "should load all mail notification files" do
       @p = @loader.load_notification('mail_user1')
       @p.should be_a(Puppi::Files::Notification)
-      @p.variables.should have(1).items
+      @p.variables.should have(3).items
     end
   
     it "should raise an exception for a invalid notification file" do

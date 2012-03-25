@@ -1,7 +1,14 @@
 require 'fakefs/spec_helpers'
-
+require 'mail'
 require 'simplecov'
 SimpleCov.start
+
+# Load support files
+Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
+
+Mail.defaults do
+  delivery_method :test # in practice you'd do this in spec_helper.rb
+end
 
 RSpec.configure do |config|
      # Ativa output colorido

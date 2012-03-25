@@ -3,9 +3,11 @@ module Puppi
     
     attr_reader :data, :datafiles, :helpers, :notifications
     
-    def load_all (file_type, puppi_module = nil)  
+    def load_all (file_type, puppi_module = nil, notification_method = nil)  
       if file_type == 'data' and puppi_module != nil
         file_glob = '*_'+puppi_module
+      elsif file_type == 'notifications' and notification_method != nil
+        file_glob = notification_method + '_*'
       else
         file_glob = '*'
       end

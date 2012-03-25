@@ -17,7 +17,7 @@ begin
     opts.on( "-m", "--module module", String, "module name to act on (Optional)" ) do |puppi_module|
       options[:puppi_module] = puppi_module
     end
-    options[:notification] = nil
+    options[:notification] = Array.new
     opts.on( "-n", "--notification notification1,notification2", Array, "notification(s) methods (Optional)" ) do |notification|
       options[:notification] = notification
     end
@@ -42,8 +42,4 @@ if options[:action] == false
 end
 
 output = Puppi::Action.new(options).output
-puts output unless output.nil?
-# 
-# output.each do |out|
-#   puts out unless out.nil?
-# end
+Puppi::Notification.new(options[:notification], output)
