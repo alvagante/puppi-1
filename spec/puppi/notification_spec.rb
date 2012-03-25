@@ -10,20 +10,12 @@ describe "Puppi::Notification" do
   it "should show raise exception when a unknown method is specified" do
     expect { Puppi::Notification.new(['unknown'], 'output') }.to raise_error(RuntimeError)
   end
-  
-  it "should not show a error message when a unknown method is specified" do
-    Puppi::Notification.new(['mail'], 'output').should be_true
+
+  it "should use stdout notification method when specified" do
+    Puppi::Notification.new(['stdout'], 'output').notify_methods.should include('stdout')
   end
-  
-  context "using a methods specified on CLI" do
-    it "should use the specified one" do
-      Puppi::Notification.new(['mail'], 'output')
-    end
-  end
-  
-  context "using a default notification specified on helper file" do
-  end
-  
-  context "printing to stdout" do
+    
+  it "should use mail notification method when specified" do
+    Puppi::Notification.new(['mail'], 'output').notify_methods.should include('mail')
   end
 end

@@ -8,6 +8,7 @@ module Puppi
   require 'puppi/loader'
   require 'puppi/notification'
   require 'puppi/notifications/mail'
+  require 'puppi/notifications/stdout'
   require 'puppi/version'
   require 'yaml'
   
