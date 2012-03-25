@@ -37,7 +37,7 @@ module Puppi
       end
       
       def load_all
-        @loader.load_all('notifications', 'mail')
+        @loader.load_all('notifications', nil, 'mail')
       end
     end
   end
