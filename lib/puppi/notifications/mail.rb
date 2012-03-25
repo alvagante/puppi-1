@@ -28,9 +28,10 @@ module Puppi
       end
       
       def valid_mailer? (mailer)
-        required_fields = %w[ from to subject method ]
+        return false if mailer.class != Puppi::Files::Notification
+        required_fields = %w[ from to subject ]
         required_fields.each do |required_field|
-          return false if mailer.variables.include? required_field
+          return false unless mailer.variables.has_key? required_field.to_sym
         end
         return true
       end

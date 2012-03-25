@@ -21,4 +21,38 @@ describe "Puppi::Notifications::Mail" do
   it { should have_sent_email.to('user1@mail.com').with_subject('[puppi] notification').with_body('puppi notification body') }
   it { should have_sent_email.to('user2@mail.com').with_subject('[puppi] notification').with_body('puppi notification body') }
 
+  it "should return invalid mailer when its not a Puppi::Files::Notification class" do
+    Puppi::Notifications::Mail.publicize_methods do
+      Puppi::Notifications::Mail.new.valid_mailer?(false).should be_false
+    end
+  end
+  
+  context "working with invalid mailer" do
+    before(:each) do
+      @hash = {"from"=>"puppi@puppi.com", "to"=>"user1@mail.com", "subject"=>"[puppi] notification"}
+    end
+    it "should return invalid when field 'to' is missing" do
+      Puppi::Notifications::Mail.publicize_methods do
+        @hash.delete('to')
+        notification = Puppi::Files::Notification.new(@hash)
+        Puppi::Notifications::Mail.new.valid_mailer?(notification).should be_false
+      end
+    end
+    
+    it "should return invalid when field 'from' is missing" do
+      Puppi::Notifications::Mail.publicize_methods do
+        @hash.delete('from')
+        notification = Puppi::Files::Notification.new(@hash)
+        Puppi::Notifications::Mail.new.valid_mailer?(notification).should be_false
+      end
+    end
+    
+    it "should return invalid when field 'subject' is missing" do
+      Puppi::Notifications::Mail.publicize_methods do
+        @hash.delete('subject')
+        notification = Puppi::Files::Notification.new(@hash)
+        Puppi::Notifications::Mail.new.valid_mailer?(notification).should be_false
+      end
+    end
+  end
 end
