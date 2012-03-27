@@ -12,7 +12,7 @@ module Puppi
   require 'puppi/version'
   require 'yaml'
   
-  @@puppidir = "/var/tmp/puppi/etc"
+  @@puppidir = "/etc/puppi"
   
   class << self
     def puppidir
